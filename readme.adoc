@@ -104,6 +104,15 @@ The above builds directly to your Docker registry. Alternatively, Jib can also b
 
 == Build and Test using Kubernetes
 
+There are multiple options to run a single-node k8s cluster on your development machine:
+
+- https://kubernetes.io/docs/setup/learning-environment/minikube/[minikube]
+- https://microk8s.io/[microk8s]
+- https://docs.docker.com/docker-for-mac/kubernetes/[Docker Desktop]
+- https://kubernetic.com/[Kubernetic]
+
+We will use Docker Desktop on Mac.
+
 Kubernetes can be easily enabled on a development machine using Docker for Mac as explained at https://docs.docker.com/docker-for-mac/#kubernetes.
 
 . Ensure that Kubernetes is enabled in Docker for Mac
