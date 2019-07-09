@@ -68,7 +68,7 @@ The above builds directly to your Docker registry. Alternatively, Jib can also b
 
 	docker container rm -f greeting
 
-== Mmeory Limits for Java Applications
+== Memory Limits for Java Applications
 
 We will use a simple Java application to show how memory limits can be specified for Java applications. The application allocates a 1GB `byte` array and will run in different configurations.
 
