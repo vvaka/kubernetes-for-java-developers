@@ -13,6 +13,8 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <gigabytes>1</gigabytes>
+        <xms>1024</xms>
+        <xmx>1024</xmx>
     </properties>
     
     <build>
@@ -22,18 +24,16 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
-                     <mainClass>${project.groupId}.MyClass</mainClass>
-                    <commandlineArgs>
-                        ${gigabytes}
-                    </commandlineArgs>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-Xms${xms}m</argument>
+                        <argument>-Xmx${xmx}m</argument>
+                        <argument>-classpath</argument>
+                        <classpath/>
+                        <argument>${project.groupId}.MyClass</argument>
+                        <argument>${gigabytes}</argument>
+                    </arguments>
                 </configuration>
             </plugin>
         </plugins>
