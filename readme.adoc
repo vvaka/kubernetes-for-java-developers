@@ -70,14 +70,14 @@ The above builds directly to your Docker registry. Alternatively, Jib can also b
 
 == Memory Limits for Java Applications
 
-We will use a simple Java application to show how memory limits can be specified for Java applications. The application allocates a 1GB `byte` array and will run in different configurations.
+We will use a simple Java application to show how memory limits can be specified for Java applications. The application allocates one to three 1GB `byte` array based upon the `gigabytes` CLI parameter. By default, only one array is populated.
 
 The source code is in the `app-memory` directory.
 
 . Run the Java application using the default settings:
 
   cd app-memory
-  mvn clean package exec:java
+  mvn clean package exec:exec
 +
 It shows the output on a MacOS machine as:
 +
@@ -88,7 +88,7 @@ max memory: 3.6 GiB
 free memory: 196.7 MiB
 total memory: 254.0 MiB
 ** PROCESSOR AND MEMORY STATS **
-==> Array initialized: 1.0 GiB
+==> Array1 initialized
 ** PROCESSOR AND MEMORY STATS **
 processors: 8
 max memory: 3.6 GiB
@@ -105,7 +105,23 @@ total memory: 1.3 GiB
 ** PROCESSOR AND MEMORY STATS **
 ```
 +
-By default, JVM will take up to https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gc-ergonomics.html[25% of the available memory] for heap. This is the number reported by `max memory` and 3.6 GB is approximately 25% of this 16GB machine. Total memory is the amount of memory used by JVM at that time. This is also the default value of `-Xmx`. Free memory is the amount of free memory in the JVM.
+`Max memory` is the maximum memory available to JVM. By default, JVM will take up to https://docs.oracle.com/javase/8/docs/technotes/guides/vm/gc-ergonomics.html[25% of the available memory] for heap. This value may not be exactly 25% because part of this memory is used by the JVM. This is also the default or specified value of `-Xmx`.
++
+Total memory is the amount of memory used by JVM at that time. This is also the default or specified value of `-Xms`.
++
+Free memory is the difference between the total and objects that are being used by the class.
++
+Following CLI options are recognized for this `mvn` command:
++
+- `gigabytes` with a value of `1`, `2` or `3`
+- `xms` with a value such as `1024`
+- `xmx` with a value such as `2048`
++
+A typical invocation may look like:
++
+```
+mvn exec:exec -Dgigabytes=2 -Dxms=1024 -Dxmx=2048
+```
 
 == Minimal Docker Image using Custom JRE
 
