@@ -12,16 +12,41 @@ public class MyClass {
 
     public static void main(String[] args) {
         printStats();
-
-        byte[] array = new byte[GIGABYTE];        
-        Arrays.fill(array, (byte)1);
         
-        System.out.println("==> Array initialized: " + printUnits(GIGABYTE));
+        byte[] array;
+        byte[] array2;
+        byte[] array3;
+
+        if (args.length == 1) {
+            byte bytes = Byte.parseByte(args[0]);
+            if (bytes >= 1) {
+                array = new byte[GIGABYTE];
+                Arrays.fill(array, (byte)1);
+                System.out.println("==> Array1 initialized");
+            }
+
+            if (bytes >= 2) {
+                array2 = new byte[GIGABYTE];
+                Arrays.fill(array2, (byte)2);
+                System.out.println("==> Array2 initialized");
+            }
+
+            if (bytes >= 3) {
+                array3 = new byte[GIGABYTE];
+                Arrays.fill(array3, (byte)3);
+                System.out.println("==> Array3 initialized");
+            }
+        } else {
+            System.out.println("==> No arrays initialized");
+        }
 
         printStats();
-        
+
         array = null;
-        System.out.println("==> Array nullified");        
+        array2 = null;
+        array3 = null;
+        System.out.println("==> Array nullified");
+
         Runtime.getRuntime().gc();
         System.out.println("==> GC done");        
         
