@@ -8,10 +8,11 @@
     <properties>
         <docker.repo>arungupta</docker.repo>
         <docker.tag>latest</docker.tag>
-        <docker.name>${project.build.finalName}:${docker.tag}</docker.name>
+        <docker.name>${docker.repo}/${project.build.finalName}:${docker.tag}</docker.name>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <gigabytes>1</gigabytes>
     </properties>
     
     <build>
@@ -30,6 +31,9 @@
                 </executions>
                 <configuration>
                      <mainClass>${project.groupId}.MyClass</mainClass>
+                    <commandlineArgs>
+                        ${gigabytes}
+                    </commandlineArgs>
                 </configuration>
             </plugin>
         </plugins>
@@ -46,17 +50,21 @@
                         <version>1.3.0</version>
                         <configuration>
                             <from>
-                                <image>openjdk:8-jre-slim</image>
+                                <image>openjdk:8u102-jre</image>
                             </from>
                             <to>
                                 <image>${docker.name}</image>
                             </to>
+                            <container>
+                                <useCurrentTimestamp>true</useCurrentTimestamp>
+                                <!--<jvmFlags>-Xmx2G</jvmFlags>-->
+                            </container>
                         </configuration>
                         <executions>
                             <execution>
                                 <phase>package</phase>
                                 <goals>
-                                    <goal>build</goal>
+                                    <goal>dockerBuild</goal>
                                 </goals>
                             </execution>
                         </executions>
