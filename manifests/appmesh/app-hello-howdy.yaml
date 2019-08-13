@@ -1,0 +1,65 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: talker
+  namespace: prod
+  labels:
+    name: talker
+spec:
+  replicas:
+  template:
+    metadata:
+      labels:
+        app: greeting
+        greeting: talker
+    spec:
+      containers:
+      - name: greeting
+        image: arungupta/greeting:hello
+        ports:
+        - containerPort: 8080
+          name: "http"
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello
+  namespace: prod
+  labels:
+    name: greeting
+spec:
+  replicas: 
+  template:
+    metadata:
+      labels:
+        app: greeting
+        greeting: hello
+    spec:
+      containers:
+      - name: greeting
+        image: arungupta/greeting:hello
+        ports:
+        - containerPort: 8080
+          name: "http"
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: howdy
+  namespace: prod
+  labels:
+    name: greeting
+spec:
+  replicas: 
+  template:
+    metadata:
+      labels:
+        app: greeting
+        greeting: howdy
+    spec:
+      containers:
+      - name: greeting
+        image: arungupta/greeting:howdy
+        ports:
+        - containerPort: 8080
+          name: "http"

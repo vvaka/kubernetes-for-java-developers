@@ -1,0 +1,41 @@
+apiVersion: appmesh.k8s.aws/v1beta1
+kind: VirtualService
+metadata:
+  name: mostly-hello.prod.svc.cluster.local
+  namespace: prod
+spec:
+  meshName: greeting-app
+  virtualRouter:
+    name: hello-router
+  routes:
+    - name: hello-route
+      http:
+        match:
+          prefix: /hello
+        action:
+          weightedTargets:
+            - virtualNodeName: hello
+              weight: 90
+            - virtualNodeName: howdy
+              weight: 10
+---
+apiVersion: appmesh.k8s.aws/v1beta1
+kind: VirtualService
+metadata:
+  name: mostly-howdy.prod.svc.cluster.local
+  namespace: prod
+spec:
+  meshName: greeting-app
+  virtualRouter:
+    name: howdy-router
+  routes:
+    - name: howdy-route
+      http:
+        match:
+          prefix: /hello
+        action:
+          weightedTargets:
+            - virtualNodeName: howdy
+              weight: 90
+            - virtualNodeName: hello
+              weight: 10
